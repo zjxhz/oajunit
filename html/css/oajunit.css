@@ -1,0 +1,21 @@
+.test-report-table {
+    table-layout: fixed;
+}
+.test-name-col {
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+}
+
+.test-name-header {
+    width: 500px;
+}
+
+.test-status-icon {
+    width: 16px;
+    /*height: 24px;*/
+}
+/*.method {
+    font-style: italic;
+    font-size: 13px;
+}*/

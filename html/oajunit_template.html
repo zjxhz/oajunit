@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OA Junit</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/dashboard.css" rel="stylesheet">
+    <link href="css/oajunit.css" rel="stylesheet">
+    <script src="js/holder.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">OA Framework Test Report Analyzer</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Help</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+        <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12 main">
+          <h1 class="page-header">Overview</h1>
+
+          <div class="row placeholders">
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <a href="oajunit-added-today.html" target="_blank">
+                <img data-src='holder.js/200x200?theme=lava&text={{failed_today}}&size=50' class="img-responsive" alt="Today+">
+              </a>
+              <h4>Today+</h4>
+              <span class="text-muted">Tests failed today but passed yesterday. These should be checked first.</span>
+            </div>            
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <a href="oajunit-passed-today.html" target="_blank">
+                <img data-src='holder.js/200x200?theme=vine&text={{passed_today}}&size=50' class="img-responsive" alt="Today-">
+              </a>
+              <h4>Today-</h4>
+              <span class="text-muted">Tests pass today but failed yesterday.</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <a href="oajunit-always-failed.html" target="_blank">
+                <img data-src='holder.js/200x200?theme=social&text={{always_failed}}&size=50' class="img-responsive" alt="Always">
+              </a>
+              <h4>Always</h4>
+              <span class="text-muted">Tests failed always. These should be checked with heigher priority as they are easier to fix.</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <a href="oajunit-occationally-failed.html" target="_blank">
+                  <img data-src='holder.js/200x200?theme=sky&text={{occationally_failed}}&size=50' class="img-responsive" alt="Occational">
+              </a>
+              <h4>Occational</h4>
+              <span class="text-muted">Tests failed occationally. These might be difficult to fix, occational timeout is usually the cause.</span>
+            </div>
+          </div>
+
+          <h2 class="sub-header">Trend</h2>
+          <div class="table-responsive">
+            {{table}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  </body>
+</html>
