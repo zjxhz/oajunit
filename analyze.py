@@ -12,11 +12,6 @@ def get_alway_failures(all_failures):
 def replace_template(template, token, result):
     return template.replace('{{%s}}'  % token, str(result))
 
-def create_table():
-    table = ET.Element('table')
-    table.set('class', 'table table-striped test-report-table')
-    return table
-
 def get_failures_today(all_failures):
     failures_today = all_failures[-1]
     failures_yesterday = all_failures[-2]
@@ -27,7 +22,7 @@ def get_passed_today(all_failures):
     failures_yesterday = all_failures[-2]
     return failures_yesterday - failures_today
 
-def replace_overview(data, all_failures, merged_failures):
+def replace_trend(template, data, all_failures, merged_failures):
     always_failures = get_alway_failures(all_failures)
     failed_today_count = len(get_failures_today(all_failures) )
     passed_today_count = len(get_passed_today(all_failures) )
@@ -35,7 +30,8 @@ def replace_overview(data, all_failures, merged_failures):
     occationally_failed_count = len(merged_failures - always_failures)
 
     table = ET.Element('table')
-    table.set('class', 'table table-striped test-report-table')
+    table.set('id','table_trend')
+    table.set('class', 'table table-striped table-tests test-trend-table')
     header = ET.SubElement(table, 'thead')
     row = ET.SubElement(header, 'tr')
     test_name_header = ET.SubElement(row, 'th')
@@ -62,21 +58,21 @@ def replace_overview(data, all_failures, merged_failures):
             else:
                 icon.set('class', icon.get('class') + ' glyphicon-ok text-success')
 
-    template = open('html/oajunit_template.html', 'r').read()
+    
     xml = ET.tostring(table)
     #pretty_xml = xml.dom.minidom.parse().toprettyxml(xml)
-    output = replace_template(template, 'table', xml)
+    output = replace_template(template, 'table_trend', xml)
     output = replace_template(output, 'failed_today', failed_today_count)
-    output = replace_template(output, 'passed_today', passed_today_count)
+    output = replace_template(output, 'merged_failure_count', len(merged_failures))
     output = replace_template(output, 'always_failed', always_failures_count)
     output = replace_template(output, 'occationally_failed', occationally_failed_count)
-    output_html = open('html/oajunit.html', 'w')
-    output_html.write(output)
-    output_html.close()
+    return output
 
-def replace_detail(failures, description, filename):
+def replace_detail(output, failures, description, table_name):
     table = ET.Element('table')
-    table.set('class', 'table table-striped')
+    table.set('id', table_name)
+    table.set('class', 'table table-striped table-tests')
+    table.set('style', 'display:none')
     header = ET.SubElement(table, 'thead')
     row = ET.SubElement(header, 'tr')
     test_num_header  = ET.SubElement(row, 'th')
@@ -93,13 +89,9 @@ def replace_detail(failures, description, filename):
         test_name_cell = ET.SubElement(row, 'td')
         test_name_cell.text = failure
 
-    template = open('html/detail_template.html', 'r').read()
+    
     xml = ET.tostring(table)
-    output = replace_template(template, 'table', xml)
-    output = replace_template(output, 'description', description)
-    output_html = open('html/oajunit-%s.html' % filename, 'w')
-    output_html.write(output)
-    output_html.close()
+    return replace_template(output, table_name, xml)
 
 def main():
     content = open('tests.json','r').read()
@@ -116,15 +108,18 @@ def main():
                 merged_failures.add(test['name'])
         all_failures.append(failures)
 
-    replace_overview(data, all_failures, merged_failures)
-    replace_detail(get_failures_today(all_failures), "Today+", "added-today")
-    replace_detail(get_passed_today(all_failures), "Today-", "passed-today")
+    
     always_failures = get_alway_failures(all_failures)
     occationally_failed= merged_failures - always_failures
-    replace_detail(always_failures, "Always", "always-failed")
-    replace_detail(occationally_failed, "Occational", "occationally-failed")
 
-
+    template = open('html/oajunit_template.html', 'r').read()
+    output = replace_trend(template, data, all_failures, merged_failures)
+    output = replace_detail(output, get_failures_today(all_failures), "Today+", "table_today")
+    output = replace_detail(output, always_failures, "Always", "table_always")
+    output = replace_detail(output, occationally_failed, "Occational", "table_occational")
+    output_html = open('html/oajunit.html', 'w')
+    output_html.write(output)
+    output_html.close()
 
 if __name__ == '__main__':    
     main()

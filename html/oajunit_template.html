@@ -9,6 +9,7 @@
     <link href="css/dashboard.css" rel="stylesheet">
     <link href="css/oajunit.css" rel="stylesheet">
     <script src="js/holder.js"></script>
+    <script src="js/oajunit.js"></script>
   </head>
   <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -32,45 +33,47 @@
       </div>
     </nav>
 
-        <div class="container-fluid">
+    <div class="container-fluid">
       <div class="row">
         <div class="col-md-12 main">
-          <h1 class="page-header">Overview</h1>
+          <h1 class="page-header">OAF JUnit Visualizer</h1>
 
           <div class="row placeholders">
             <div class="col-xs-6 col-sm-3 placeholder">
-              <a href="oajunit-added-today.html" target="_blank">
-                <img data-src='holder.js/200x200?theme=lava&text={{failed_today}}&size=50' class="img-responsive" alt="Today+">
+              <a onclick="showTable('#table_trend');">
+                <img data-src='holder.js/200x200?theme=vine&text={{merged_failure_count}}&size=50' class="img-responsive" alt="Trend" onclick="showTable('#table_trend');">
+              </a>
+              <h4>Trend</h4>
+              <span class="text-muted">Trend shows what tests failed on which date</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <a onclick="showTable('#table_today');">
+                <img data-src='holder.js/200x200?theme=lava&text={{failed_today}}&size=50' class="img-responsive" alt="Today+" onclick="showTable('#table_failed_today');">
               </a>
               <h4>Today+</h4>
               <span class="text-muted">Tests failed today but passed yesterday. These should be checked first.</span>
             </div>            
             <div class="col-xs-6 col-sm-3 placeholder">
-              <a href="oajunit-passed-today.html" target="_blank">
-                <img data-src='holder.js/200x200?theme=vine&text={{passed_today}}&size=50' class="img-responsive" alt="Today-">
-              </a>
-              <h4>Today-</h4>
-              <span class="text-muted">Tests pass today but failed yesterday.</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <a href="oajunit-always-failed.html" target="_blank">
-                <img data-src='holder.js/200x200?theme=social&text={{always_failed}}&size=50' class="img-responsive" alt="Always">
+              <a onclick="showTable('#table_always');">
+                <img data-src='holder.js/200x200?theme=social&text={{always_failed}}&size=50' class="img-responsive" alt="Always" onclick="showTable('#table_failed_always');">
               </a>
               <h4>Always</h4>
               <span class="text-muted">Tests failed always. These should be checked with heigher priority as they are easier to fix.</span>
             </div>
             <div class="col-xs-6 col-sm-3 placeholder">
-              <a href="oajunit-occationally-failed.html" target="_blank">
-                  <img data-src='holder.js/200x200?theme=sky&text={{occationally_failed}}&size=50' class="img-responsive" alt="Occational">
+              <a onclick="showTable('#table_occational');">
+                  <img data-src='holder.js/200x200?theme=sky&text={{occationally_failed}}&size=50' class="img-responsive" alt="Occational" onclick="showTable('#table_failed_occational');">
               </a>
               <h4>Occational</h4>
               <span class="text-muted">Tests failed occationally. These might be difficult to fix, occational timeout is usually the cause.</span>
             </div>
           </div>
 
-          <h2 class="sub-header">Trend</h2>
           <div class="table-responsive">
-            {{table}}
+            {{table_trend}}
+            {{table_today}}
+            {{table_always}}
+            {{table_occational}}
           </div>
         </div>
       </div>
