@@ -10,12 +10,16 @@ class TestsSpider(scrapy.Spider):
 
     def parse(self, response):
         days = getattr(self, 'days', None)
+        gap = getattr(self, 'gap', None)
         if days is None:
-            days = 7
-        for report in response.css('table a').re(r'>(jdev.*)<')[-int(days):]:
-        	if report is not None:
-        	    report = response.urljoin(report + "html/all-tests.html")
-        	    yield scrapy.Request(report, callback=self.parse_report)
+            days = 14
+        if not gap:
+            gap = 7
+        # '-int(days)*gap::gap' means latest 'number(days)' of reports by 'gap'
+        for report in response.css('table a').re(r'>(jdev.*)<')[-int(days)*gap::gap]:
+            if report is not None:
+                report = response.urljoin(report + "html/all-tests.html")
+                yield scrapy.Request(report, callback=self.parse_report)
 
     def parse_report(self, response):
         name = re.search(r'/(jdev.*)/html', response.url).group(1)

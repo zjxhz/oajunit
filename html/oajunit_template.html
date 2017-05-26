@@ -37,38 +37,30 @@
       <div class="row">
         <div class="col-md-12 main">
           <h1 class="page-header">OAF JUnit Visualizer</h1>
-
           <div class="row placeholders">
             <div class="col-xs-6 col-sm-3 placeholder">
-              <a onclick="showTable('#table_trend');">
-                <img data-src='holder.js/200x200?theme=vine&text={{merged_failure_count}}&size=50' class="img-responsive" alt="Trend" onclick="showTable('#table_trend');">
-              </a>
+              <img data-src='holder.js/200x200?theme=vine&text={{merged_failure_count}}&size=50' class="img-responsive clickable" alt="Trend" onclick="showTable('#table_trend', 'Trend');">
               <h4>Trend</h4>
               <span class="text-muted">Trend shows what tests failed on which date</span>
             </div>
             <div class="col-xs-6 col-sm-3 placeholder">
-              <a onclick="showTable('#table_today');">
-                <img data-src='holder.js/200x200?theme=lava&text={{failed_today}}&size=50' class="img-responsive" alt="Today+" onclick="showTable('#table_failed_today');">
-              </a>
+              <img data-src='holder.js/200x200?theme=lava&text={{failed_today}}&size=50' class="img-responsive clickable" alt="Today+"  onclick="showTable('#table_today', 'Today+');">
               <h4>Today+</h4>
               <span class="text-muted">Tests failed today but passed yesterday. These should be checked first.</span>
             </div>            
             <div class="col-xs-6 col-sm-3 placeholder">
-              <a onclick="showTable('#table_always');">
-                <img data-src='holder.js/200x200?theme=social&text={{always_failed}}&size=50' class="img-responsive" alt="Always" onclick="showTable('#table_failed_always');">
-              </a>
+              <img data-src='holder.js/200x200?theme=social&text={{always_failed}}&size=50' class="img-responsive clickable" alt="Always" onclick="showTable('#table_always', 'Always');">
               <h4>Always</h4>
               <span class="text-muted">Tests failed always. These should be checked with heigher priority as they are easier to fix.</span>
             </div>
             <div class="col-xs-6 col-sm-3 placeholder">
-              <a onclick="showTable('#table_occational');">
-                  <img data-src='holder.js/200x200?theme=sky&text={{occationally_failed}}&size=50' class="img-responsive" alt="Occational" onclick="showTable('#table_failed_occational');">
-              </a>
+                <img data-src='holder.js/200x200?theme=sky&text={{occationally_failed}}&size=50' class="img-responsive clickable" alt="Occational" onclick="showTable('#table_occational', 'Occational');">
               <h4>Occational</h4>
               <span class="text-muted">Tests failed occationally. These might be difficult to fix, occational timeout is usually the cause.</span>
             </div>
           </div>
-
+          
+          <h2 id='category' class="sub-header">Trend</h2>
           <div class="table-responsive">
             {{table_trend}}
             {{table_today}}

@@ -15,6 +15,10 @@
     width: 16px;
     /*height: 24px;*/
 }
+
+img.clickable {
+    cursor: pointer;
+}
 /*.method {
     font-style: italic;
     font-size: 13px;
